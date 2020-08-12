@@ -5,7 +5,6 @@
   "version": "0.1.0",
   "author": "Daniel Betteridge <mail@danielbetteridge.com>",
   "dependencies": {
-    "chartist": "^0.11.4",
     "csvtojson": "^2.0.10",
     "gatsby": "^2.24.41",
     "gatsby-image": "^2.4.15",
@@ -18,9 +17,9 @@
     "gatsby-transformer-sharp": "^2.5.12",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-chartist": "^0.14.3",
     "react-dom": "^16.12.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "recharts": "^1.8.5"
   },
   "devDependencies": {
     "eslint": "^7.6.0",

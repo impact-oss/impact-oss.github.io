@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "gatsby"
-import ChartistGraph from "react-chartist"
-
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 

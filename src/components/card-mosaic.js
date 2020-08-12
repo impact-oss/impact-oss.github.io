@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react"
 import Card from "./card"
 import csvtojson from "csvtojson"
-import ChartistGraph from "react-chartist"
+import {
+  LineChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Line,
+  Tooltip,
+  Label,
+} from "recharts"
 import { Link } from "gatsby"
 
 const CardMosaic = ({ search }) => {
@@ -27,12 +35,13 @@ const CardMosaic = ({ search }) => {
     let total = 0
     setState(s => ({
       ...s,
-      labels: cards.map((_, i) => i),
-      series: [
-        cards.map(card =>
-          card.layoffs >= 0 ? (total += parseInt(card.layoffs, 10)) : 0
-        ),
-      ],
+      series: cards.map((card, i) => ({
+        total_layoffs:
+          card.layoffs >= 0 ? (total += parseInt(card.layoffs, 10)) : 0,
+        layoffs: card.layoffs >= 0 ? parseInt(card.layoffs, 10) : 0,
+        company_name: card.name,
+        name: i,
+      })),
     }))
   }, [cards])
 
@@ -49,14 +58,36 @@ const CardMosaic = ({ search }) => {
         {" > " + state.region + " > " + state.subregion}
       </div>
       {state.series && (
-        <ChartistGraph
-          data={{
-            labels: state.labels,
-            series: state.series,
-          }}
-          options={{ low: 0, showArea: false }}
-          type={"Line"}
-        />
+        <LineChart
+          width={730}
+          height={400}
+          data={state.series}
+          margin={{ top: 15, right: 30, left: 40, bottom: 20 }}
+        >
+          <XAxis dataKey="name">
+            <Label
+              value="Impacted companies"
+              offset={-15}
+              position="insideBottom"
+            />
+          </XAxis>
+          <YAxis>
+            <Label
+              value={"Number of layoffs"}
+              angle={-90}
+              position={"insideLeft"}
+              offset={-30}
+            />
+          </YAxis>
+          <Tooltip key={"layoffs"} />
+          <CartesianGrid stroke="#f5f5f5" />
+          <Line
+            type="monotone"
+            dataKey="total_layoffs"
+            stroke="#ff7300"
+            yAxisId={0}
+          />
+        </LineChart>
       )}
       <div
         style={{
